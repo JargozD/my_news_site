@@ -3,6 +3,7 @@
 namespace App\Services\NewsApi;
 
 use App\Services\NewsApi\NewsApiConnector;
+use Exception;
 
 class NewsApiservice
 {
@@ -13,19 +14,33 @@ class NewsApiservice
         $this->connector = $connector;
     }
 
-    function search(string $query, $from, $to)
+    function search(string $query = null, string $from = null, string $to = null, int $pageSize = 10, int $page = 1) : array
     {
+        if (empty($query)){
+            return ['error' => 'Пожалуйста, введите запрос'];
+        }
+
         $params = [
             'q' => $query,
-            'from' => $from,
-            'to' => $to,
-            'pageSize' => 15
+            'pageSize' => $pageSize,
+            'page' => $page
         ];
 
-        // var_dump($params);
-        // exit();
+        if (!empty($from)){
+            $params['from'] = $from;
+        }
 
-        return $this->connector->everything($params);
+        if (!empty($to)){
+            $params['to'] = $to;
+        }
+
+        try {
+            return $this->connector->everything($params);
+        } catch (Exception $e) {
+            return [
+                'error' => 'Извините, сервис новостей не доступен. Попробуйте позже...'
+            ];
+        }
     }
     /******************************************************************** Новости для главной страницы **************************************************************/
 
@@ -47,7 +62,7 @@ class NewsApiservice
 
 
     /***************************** Развлечения **************************/
-    
+
     function mainPageNewsEntertainment()
     {
         $params = [
@@ -64,7 +79,7 @@ class NewsApiservice
 
 
     /***************************** Главные **************************/
-    
+
     function mainPageNewsGeneral()
     {
         $params = [
@@ -81,7 +96,7 @@ class NewsApiservice
 
 
     /***************************** Здоровье **************************/
-    
+
     function mainPageNewsHealth()
     {
         $params = [
@@ -98,7 +113,7 @@ class NewsApiservice
 
 
     /***************************** Наука **************************/
-    
+
     function mainPageNewsScience()
     {
         $params = [
@@ -115,7 +130,7 @@ class NewsApiservice
 
 
     /***************************** Спорт **************************/
-    
+
     function mainPageNewsSports()
     {
         $params = [
@@ -132,7 +147,7 @@ class NewsApiservice
 
 
     /***************************** Технологии **************************/
-    
+
     function mainPageNewsTechnology()
     {
         $params = [
