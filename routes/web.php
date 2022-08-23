@@ -39,13 +39,14 @@ Route::get('/news', function () {
     return view('news');
 });
 
+Route::post('/news', [NewsAPIcontroller::class, 'search']);
+
 Route::get('/reg', function () {
     return view('reg');
 });
 
 Route::post('/reg/submit', [RegistrationController::class, 'submit']);
 
-Route::get('/news/search', [NewsAPIcontroller::class, 'search']);
 
 
 Route::get('/jaja', function () {

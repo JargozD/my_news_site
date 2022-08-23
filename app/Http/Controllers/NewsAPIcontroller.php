@@ -17,10 +17,12 @@ class NewsAPIcontroller extends Controller
             $req->input('q'),
             $req->input('from'),
             $req->input('to'),
-            $req->input('pageSize')
+            $req->input('pageSize'),
+            $req->input('page')
         );
 
         // return view('news', compact('response'));
+        $req->flash();
         return view('news')->with(['newsData' => $response]);
         //dd($response);
     }
