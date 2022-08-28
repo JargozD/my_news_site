@@ -13,14 +13,12 @@ class RegistrationController extends Controller
         $validation = $req->validate([
             'name' => 'required',
             'email' => 'required|email',
-            //'login' => 'required|min:3',
             'password' => 'required|min:8',
         ]);
 
         $registration = new Registration();
         $registration->name = $req->input('name');
         $registration->email = $req->input('email');
-        //$registration->login = $req->input('login');
         $registration->password = $req->input('password');
 
         $registration->save();

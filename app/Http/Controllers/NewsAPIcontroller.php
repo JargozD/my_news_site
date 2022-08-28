@@ -11,6 +11,17 @@ use League\CommonMark\Node\Query\OrExpr;
 
 class NewsAPIcontroller extends Controller
 {
+    /**
+     * Заполнение запроса данными на основе указанных параметров расположенных на странице news.blade.php
+     * и отправление данных на ту же страницу в виде массива 'newsData'
+     * 
+     * @param   $req->input('q'),           Ключевое слово запроса
+     * @param   $req->input('from'),        С какой даты показывать новости
+     * @param   $req->input('to'),          До какой даты показывать новости
+     * @param   $req->input('pageSize'),    Сколько результатов нужно показывать на одной странице
+     * @param   $req->input('page')         Какая страница показывается по умолчанию
+     * 
+     */
     public function search(Request $req, NewsApiService $newsApiService)
     {
         $response = $newsApiService->search(
@@ -21,32 +32,24 @@ class NewsAPIcontroller extends Controller
             $req->input('page')
         );
 
-        // return view('news', compact('response'));
         $req->flash();
         return view('news')->with(['newsData' => $response]);
-        //dd($response);
     }
 
+    /**
+     * Отправка данных, состоящих из блоков по 5 новостей каждой категории на главную страницу
+     * 
+     */
     public function mainPageNews(NewsApiService $newsApiService)
     {
-        $responseBusiness = $newsApiService->mainPageNewsBusiness();
-        $responseEntertainment = $newsApiService->mainPageNewsEntertainment();
-        $responseGeneral = $newsApiService->mainPageNewsGeneral();
-        $responseHealth = $newsApiService->mainPageNewsHealth();
-        $responseScience = $newsApiService->mainPageNewsScience();
-        $responseSports = $newsApiService->mainPageNewsSports();
-        $responseTechnology = $newsApiService->mainPageNewsTechnology();
-
-        // return view('news', compact('response'));
         return view('home')
-        ->with(['newsDataBusiness' => $responseBusiness])
-        ->with(['newsDataEntertainment' => $responseEntertainment])
-        ->with(['newsDataGeneral' => $responseGeneral])
-        ->with(['newsDataHealth' => $responseHealth])
-        ->with(['newsDataScience' => $responseScience])
-        ->with(['newsDataSports' => $responseSports])
-        ->with(['newsDataTechnology' => $responseTechnology]);
-        //dd($response);
+            ->with(['newsDataGeneral' => $newsApiService->getTopHeadlinesByCategory('general')])
+            ->with(['newsDataBusiness' => $newsApiService->getTopHeadlinesByCategory('business')])
+            ->with(['newsDataEntertainment' => $newsApiService->getTopHeadlinesByCategory('entertainment')])
+            ->with(['newsDataHealth' => $newsApiService->getTopHeadlinesByCategory('health')])
+            ->with(['newsDataScience' => $newsApiService->getTopHeadlinesByCategory('science')])
+            ->with(['newsDataSports' => $newsApiService->getTopHeadlinesByCategory('sports')])
+            ->with(['newsDataTechnology' => $newsApiService->getTopHeadlinesByCategory('technology')]);
     }
 
 }
