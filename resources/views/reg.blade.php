@@ -62,6 +62,12 @@
             </div>
             @endif
 
+            @if(isset($success))
+            <div class="alert alert-success">
+                {{$success}}
+            </div>
+            @endif
+
             <form class="p-4 p-md-5 border rounded-3 bg-light" action="/reg/submit" method="post">
 
                 @csrf
@@ -77,11 +83,6 @@
                 <div class="form-floating mb-3">
                     <input type="password" name="password" class="form-control" id="password" placeholder="Пароль">
                     <label for="password">Пароль:</label>
-                </div>
-                <div class="checkbox mb-3">
-                    <label>
-                        <input type="checkbox" value="remember-me"> Запомнить меня
-                    </label>
                 </div>
                 <button class="w-100 btn btn-lg btn-primary" type="submit">Зарегистрироваться</button>
                 <hr class="my-4">

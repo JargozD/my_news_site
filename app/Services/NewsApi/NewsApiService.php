@@ -28,7 +28,7 @@ class NewsApiservice
     /**
      * Здесь формируется запрос на основе данных, полученных со страницы news.blade.php
      */
-    function search(string $query = null, string $from = null, string $to = null, int $pageSize = 10, int $page = 1): array
+    function search(string $query = null, string $from = null, string $to = null, string $language = null, int $pageSize = 10, int $page = 1): array
     {
         if (empty($query)) {
             return ['error' => 'Пожалуйста, введите запрос'];
@@ -37,7 +37,7 @@ class NewsApiservice
         $params = [
             'q' => $query,
             'pageSize' => $pageSize,
-            'page' => $page
+            'page' => $page,
         ];
 
         if (!empty($from)) {
@@ -46,6 +46,10 @@ class NewsApiservice
 
         if (!empty($to)) {
             $params['to'] = $to;
+        }
+
+        if (!empty($language)) {
+            $params['language'] = $language;
         }
 
 

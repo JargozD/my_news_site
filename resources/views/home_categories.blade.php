@@ -1,6 +1,6 @@
 @if(isset($newsDatas))
 <hr>
-<h3 class="text-center">Главные Новости</h3>
+<h3 class="text-center">{{$header}}</h3>
 <hr>
 
 

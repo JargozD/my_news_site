@@ -5,9 +5,10 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Главная страница</title>
+  <title>Новостной портал</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -20,25 +21,31 @@
             <path d="M0 2.5A1.5 1.5 0 0 1 1.5 1h11A1.5 1.5 0 0 1 14 2.5v10.528c0 .3-.05.654-.238.972h.738a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 1 1 0v9a1.5 1.5 0 0 1-1.5 1.5H1.497A1.497 1.497 0 0 1 0 13.5v-11zM12 14c.37 0 .654-.211.853-.441.092-.106.147-.279.147-.531V2.5a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0-.5.5v11c0 .278.223.5.497.5H12z" />
             <path d="M2 3h10v2H2V3zm0 3h4v3H2V6zm0 4h4v1H2v-1zm0 2h4v1H2v-1zm5-6h2v1H7V6zm3 0h2v1h-2V6zM7 8h2v1H7V8zm3 0h2v1h-2V8zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1z" />
           </svg>
-          <!-- <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg> -->
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="/" class="nav-link px-2 text-secondary">Главная</a></li>
-          <li><a href="/news" class="nav-link px-2 text-secondary">Поиск</a></li>
-          <li><a href="/contact" class="nav-link px-2 text-secondary">Контакты</a></li>
-          <li><a href="/about" class="nav-link px-2 text-secondary">О нас</a></li>
+          <li><a href="/" class="nav-link px-2 link-light text-secondary">Главная</a></li>
+          <li><a href="/news" class="nav-link px-2 link-light text-secondary">Поиск</a></li>
+          <li><a href="/about" class="nav-link px-2 link-light text-secondary">О нас</a></li>
         </ul>
 
-        <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-          <input type="search" class="form-control form-control-dark text-white bg-dark" placeholder="Поиск..." aria-label="Search">
-        </form> -->
 
-        <div class="text-end">
-          <button type="button" class="btn btn-outline-light me-2">Войти</button>
-          <a href="/reg" class="btn btn-warning" role="button">Регистрация</a>
-          <!-- <button type="button" class="btn btn-warning">Регистрация</button> -->
-        </div>
+        @if(Auth::check() == false)
+          <div class="text-end">
+            <a href="/login" class="btn btn-outline-light me-2" role="button">Войти</a>
+            <a href="/reg" class="btn btn-warning" role="button">Регистрация</a>
+          </div>
+        @endif
+
+        @if(Auth::check() == true)
+          <a href="#" class="d-block link-light text-secondary text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="dropdown">
+            <img src="{{asset('images/no-avatar.png')}}" width="32" height="32" class="rounded-circle">{{ Auth::user()->name }}
+          </a>
+          <ul class="dropdown-menu text-small" style>
+            <li><a class="dropdown-item" href="/logout">Выйти</a></li>
+          </ul>
+        @endif
+
       </div>
     </div>
   </header>
@@ -70,8 +77,7 @@
             </svg></a></li>
       </ul>
     </footer>
-  </div>
-
+  </div>  
 </body>
 
 </html>

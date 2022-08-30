@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\NewsAPIcontroller;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\LoginController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Http\Client\Events\RequestSending;
 use Illuminate\Http\Client\Request as ClientRequest;
@@ -31,10 +32,6 @@ Route::get('/about', function () {
     return view('about');
 });
 
-Route::get('/contact', function () {
-    return view('contact');
-});
-
 Route::get('/news', function () {
     return view('news');
 });
@@ -46,6 +43,14 @@ Route::get('/reg', function () {
 });
 
 Route::post('/reg/submit', [RegistrationController::class, 'submit']);
+
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::post('/login', [LoginController::class, 'login']);
+
+Route::get('/logout', [LoginController::class, 'logout']);
 
 
 
