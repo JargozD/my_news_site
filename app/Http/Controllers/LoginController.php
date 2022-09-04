@@ -45,7 +45,6 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/news');
-        // return redirect('/');
+        return redirect('/');
     }
 }

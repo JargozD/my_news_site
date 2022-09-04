@@ -24,10 +24,6 @@ use Illuminate\Support\Facades\Http;
 
 Route::get('/', [NewsAPIcontroller::class, 'mainPageNews']);
 
-Route::get('/test', function () {
-    return view('test');
-});
-
 Route::get('/about', function () {
     return view('about');
 });
@@ -51,10 +47,3 @@ Route::get('/login', function () {
 Route::post('/login', [LoginController::class, 'login']);
 
 Route::get('/logout', [LoginController::class, 'logout']);
-
-
-
-Route::get('/jaja', function () {
-    $response = Http::acceptJson()->get('https://newsapi.org/v2/everything?q=Кот Валлаби&apiKey=448e6a0fa3fb4c79aea5b6a8bf107705');
-    var_dump(json_decode($response, true));
-});

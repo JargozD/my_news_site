@@ -24,6 +24,6 @@ class RegistrationController extends Controller
 
         $registration->save();
 
-        return view('/reg')->with(['success' => 'Вы успешно зарегистрировались!']);
+        return redirect('/login')->with('success', 'Вы успешно зарегистрировались! Теперь можно войти :)');
     }
 }

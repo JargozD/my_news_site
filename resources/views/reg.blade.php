@@ -1,48 +1,6 @@
 @extends('layouts')
 
 @section('main_content')
-<!-- <div class="container">
-    <h1>Регистрация</h1>
-
-    @if($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach($errors->all() as $err)
-            <li>{{$err}}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
-    
-    <form action="/reg/submit" method="post">
-
-        @csrf
-
-        <div class="form-group">
-            <label for="name">Имя</label>
-            <input type="text" name="name" placeholder="Введите имя" id="name" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="text" name="email" placeholder="Введите email" id="email" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label for="login">Логин</label>
-            <input type="text" name="login" placeholder="Введите логин" id="login" class="form-control">
-        </div>
-
-        <div class="form-group">
-            <label for="password">Пароль</label>
-            <input type="text" name="password" placeholder="Введите пароль" id="password" class="form-control">
-        </div>
-
-        <div class="col-12">
-            <button type="submit" class="btn btn-success">Отправить</button>
-        </div>
-    </form>
-</div> -->
 
 <div class="container col-xl-10 col-xxl-8 px-4 py-5">
     <div class="row align-items-center g-lg-5 py-5">
@@ -59,12 +17,6 @@
                     <li>{{$err}}</li>
                     @endforeach
                 </ul>
-            </div>
-            @endif
-
-            @if(isset($success))
-            <div class="alert alert-success">
-                {{$success}}
             </div>
             @endif
 

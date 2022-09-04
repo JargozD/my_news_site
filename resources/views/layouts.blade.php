@@ -29,14 +29,6 @@
           <li><a href="/about" class="nav-link px-2 link-light text-secondary">О нас</a></li>
         </ul>
 
-
-        @if(Auth::check() == false)
-          <div class="text-end">
-            <a href="/login" class="btn btn-outline-light me-2" role="button">Войти</a>
-            <a href="/reg" class="btn btn-warning" role="button">Регистрация</a>
-          </div>
-        @endif
-
         @if(Auth::check() == true)
           <a href="#" class="d-block link-light text-secondary text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="dropdown">
             <img src="{{asset('images/no-avatar.png')}}" width="32" height="32" class="rounded-circle">{{ Auth::user()->name }}
@@ -44,6 +36,13 @@
           <ul class="dropdown-menu text-small" style>
             <li><a class="dropdown-item" href="/logout">Выйти</a></li>
           </ul>
+
+        @else
+          <div class="text-end">
+            <a href="/login" class="btn btn-outline-light me-2" role="button">Войти</a>
+            <a href="/reg" class="btn btn-warning" role="button">Регистрация</a>
+          </div>
+
         @endif
 
       </div>

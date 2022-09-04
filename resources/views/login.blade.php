@@ -12,19 +12,19 @@
 
 
             @if($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach($errors->all() as $err)
-                    <li>{{$err}}</li>
-                    @endforeach
-                </ul>
-            </div>
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $err)
+                        <li>{{$err}}</li>
+                        @endforeach
+                    </ul>
+                </div>
             @endif
 
-            @if(isset($success))
-            <div class="alert alert-success">
-                {{$success}}
-            </div>
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{session('success')}}
+                </div>
             @endif
 
             <form class="p-4 p-md-5 border rounded-3 bg-light" action="/login" method="post">
