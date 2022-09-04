@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationData;
-use App\Models\Registration;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class RegistrationController extends Controller
 {
@@ -16,14 +17,13 @@ class RegistrationController extends Controller
             'password' => 'required|min:8',
         ]);
 
-        $registration = new Registration();
+        $registration = new User();
         $registration->name = $req->input('name');
         $registration->email = $req->input('email');
-        $registration->password = $req->input('password');
+        $registration->password = Hash::make($req->input('password'));
 
         $registration->save();
 
-        return "Nice";
-        // return redirect()->route('home')->with('success', 'Вы успешно зарегистрировались!');
+        return redirect('/login')->with('success', 'Вы успешно зарегистрировались! Теперь можно войти :)');
     }
 }

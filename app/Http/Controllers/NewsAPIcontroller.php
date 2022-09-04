@@ -18,6 +18,7 @@ class NewsAPIcontroller extends Controller
      * @param   $req->input('q'),           Ключевое слово запроса
      * @param   $req->input('from'),        С какой даты показывать новости
      * @param   $req->input('to'),          До какой даты показывать новости
+     * @param   $req->input('language'),    На каком языке показывать новости
      * @param   $req->input('pageSize'),    Сколько результатов нужно показывать на одной странице
      * @param   $req->input('page')         Какая страница показывается по умолчанию
      * 
@@ -28,6 +29,7 @@ class NewsAPIcontroller extends Controller
             $req->input('q'),
             $req->input('from'),
             $req->input('to'),
+            $req->input('language'),
             $req->input('pageSize'),
             $req->input('page')
         );

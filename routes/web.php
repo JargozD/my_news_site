@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\NewsAPIcontroller;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\LoginController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Http\Client\Events\RequestSending;
 use Illuminate\Http\Client\Request as ClientRequest;
@@ -23,16 +24,8 @@ use Illuminate\Support\Facades\Http;
 
 Route::get('/', [NewsAPIcontroller::class, 'mainPageNews']);
 
-Route::get('/test', function () {
-    return view('test');
-});
-
 Route::get('/about', function () {
     return view('about');
-});
-
-Route::get('/contact', function () {
-    return view('contact');
 });
 
 Route::get('/news', function () {
@@ -47,9 +40,10 @@ Route::get('/reg', function () {
 
 Route::post('/reg/submit', [RegistrationController::class, 'submit']);
 
-
-
-Route::get('/jaja', function () {
-    $response = Http::acceptJson()->get('https://newsapi.org/v2/everything?q=Кот Валлаби&apiKey=448e6a0fa3fb4c79aea5b6a8bf107705');
-    var_dump(json_decode($response, true));
+Route::get('/login', function () {
+    return view('login');
 });
+
+Route::post('/login', [LoginController::class, 'login']);
+
+Route::get('/logout', [LoginController::class, 'logout']);

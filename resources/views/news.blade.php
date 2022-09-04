@@ -11,12 +11,17 @@
     <h1 class="display-5 fw-bold">Найдите любую новость</h1>
     <div class="col-lg-6 mx-auto">
         <p class="lead mb-4">Введите запрос ниже, чтобы начать поиск.</p>
-        <!-- <div class="d-grid gap-2 d-sm-flex justify-content-sm-center"> -->
 
         @if(isset($newsData['error']))
         <div class="alert alert-danger">
             {{$newsData['error']}}
         </div>
+        @endif
+
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{session('success')}}
+            </div>
         @endif
 
         <form class="p-4 p-md-5 border rounded-3 bg-light" action="/news" method="post">
@@ -30,15 +35,37 @@
                 <input type="text" name="q" placeholder="Введите запрос" id="q" class="form-control" value="{{old('q')}}">
             </div>
 
-            <div class="form-group mb-3">
-                <label for="from">Найти от </label>
-                <input type="date" name="from" id="from" class="form-control" value="{{old('from')}}">
-            </div>
+            @if(Auth::check() == true)
+                <div class="form-group mb-3">
+                    <label for="from">Найти от </label>
+                    <input type="date" name="from" id="from" class="form-control" value="{{old('from')}}">
+                </div>
 
-            <div class="form-group mb-3">
-                <label for="to">Найти до </label>
-                <input type="date" name="to" id="to" class="form-control" value="{{old('to')}}">
-            </div>
+                <div class="form-group mb-3">
+                    <label for="to">Найти до </label>
+                    <input type="date" name="to" id="to" class="form-control" value="{{old('to')}}">
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="language">На каком языке показать новости </label>
+                    <select class="form-select" aria-label="Default select example" name="language" id="language">
+                        <option value="ru" @selected(old('language')==null or old('language')=='ru' )>Русский</option>
+                        <option value="en" @selected(old('language')=='en' )>Английский</option>
+                        <option value="de" @selected(old('language')=='de' )>Немецкий</option>
+                        <option value="ar" @selected(old('language')=='ar' )>Арабский</option>
+                        <option value="es" @selected(old('language')=='es' )>Испанский</option>
+                        <option value="fr" @selected(old('language')=='fr' )>Французский</option>
+                        <option value="he" @selected(old('language')=='he' )>Иврит</option>
+                        <option value="it" @selected(old('language')=='it' )>Итальянский</option>
+                        <option value="nl" @selected(old('language')=='nl' )>Нидерландский (Голландский)</option>
+                        <option value="no" @selected(old('language')=='no' )>Норвежский</option>
+                        <option value="pt" @selected(old('language')=='pt' )>Португальский</option>
+                        <option value="sv" @selected(old('language')=='sv' )>Шведский</option>
+                        <option value="zh" @selected(old('language')=='zh' )>Китайский</option>
+                    </select>
+                </div>
+            @endif
+
 
             <div class="form-group mb-3">
                 <label for="pageSize">Количество на странице </label>
@@ -54,14 +81,19 @@
             </div>
 
         </form>
-        <!-- </div> -->
+        @if(Auth::check() == false)
+        <p><a href="/login">Войдите</a>, чтобы воспользоваться расширенным поиском</p>
+        @endif
     </div>
 </div>
 
 
 @if(isset($newsData) && !isset($newsData['error']))
-<!-- <?php var_dump($newsData); ?> -->
-<hr>
+<hr id="newsCards">
+
+@include('news_pagination')
+<br>
+
 <h5>Найдено результатов: {{$newsData['totalResults']}}</h5>
 
 
@@ -82,15 +114,8 @@
     @endforeach
 </div>
 
-<nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-        <li class="page-item pages__item" value="1"><div class="page-link">First</div></li>
-        @for ($pageNumber = 1; $pageNumber <= $newsData['pageCount']; $pageNumber++) 
-            <li class="page-item pages__item" name="page" id="page" value="{{$pageNumber}}"><div class="page-link">{{$pageNumber}}</div></li>
-        @endfor
-        <li class="page-item pages__item" value="{{$newsData['pageCount']}}"><div class="page-link">Last</div></li>
-    </ul>
-</nav>
+<br>
+@include('news_pagination')
 
 @endif
 
@@ -111,6 +136,10 @@
             element.classList.add('active');
         }
     })
+
+    const element = document.getElementById("newsCards");
+
+    element.scrollIntoView();
 </script>
 
 @endsection
